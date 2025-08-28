@@ -1,12 +1,12 @@
 pipeline {
     agent {
         docker {
-            image 'postman/newman:alpine' // Image officielle Newman
+            image 'postman/newman:latest'
         }
     }
 
     environment {
-        BASE_URL = "http://192.168.1.95:8001" // Modifie selon ton API
+        BASE_URL = "http://192.168.1.95:8001" 
     }
 
     stages {
