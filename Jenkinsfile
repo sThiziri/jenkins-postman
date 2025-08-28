@@ -14,29 +14,29 @@ pipeline {
     stages {
         stage('Prepare Reports Directory') {
             steps {
-                sh(script: "mkdir -p ${REPORTS_DIR}", shell: "/bin/sh")
+                sh "mkdir -p ${REPORTS_DIR}"
             }
         }
 
         stage('Run Postman Collection - home_test') {
             steps {
-                sh(script: """
+                sh """
                     newman run home_test.postman_collection.json \
                         --env-var 'url=${BASE_URL}' \
                         --reporters cli,html \
                         --reporter-html-export ${REPORTS_DIR}/home_test_report.html
-                """, shell: "/bin/sh")
+                """
             }
         }
 
         stage('Run Postman Collection - welcome_test') {
             steps {
-                sh(script: """
+                sh """
                     newman run welcome_test.postman_collection.json \
                         --env-var 'url=${BASE_URL}' \
                         --reporters cli,html \
                         --reporter-html-export ${REPORTS_DIR}/welcome_test_report.html
-                """, shell: "/bin/sh")
+                """
             }
         }
 
