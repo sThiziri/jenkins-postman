@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        BASE_URL = "http://localhost:3000"
+        BASE_URL = "http://192.168.1.95:8001/"
     }
 
     stages {
