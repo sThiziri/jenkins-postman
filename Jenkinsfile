@@ -8,25 +8,41 @@ pipeline {
 
     environment {
         BASE_URL = "http://192.168.1.95:8001"
+        REPORTS_DIR = "reports"
     }
 
     stages {
+        stage('Prepare Reports Directory') {
+            steps {
+                sh(script: "mkdir -p ${REPORTS_DIR}", shell: "/bin/sh")
+            }
+        }
+
         stage('Run Postman Collection - home_test') {
             steps {
-                sh "newman run home_test.postman_collection.json --env-var 'url=${BASE_URL}' --reporters cli,html --reporter-html-export home_test_report.html"
+                sh(script: """
+                    newman run home_test.postman_collection.json \
+                        --env-var 'url=${BASE_URL}' \
+                        --reporters cli,html \
+                        --reporter-html-export ${REPORTS_DIR}/home_test_report.html
+                """, shell: "/bin/sh")
             }
         }
 
         stage('Run Postman Collection - welcome_test') {
             steps {
-                sh "newman run welcome_test.postman_collection.json --env-var 'url=${BASE_URL}' --reporters cli,html --reporter-html-export welcome_test_report.html"
-                
+                sh(script: """
+                    newman run welcome_test.postman_collection.json \
+                        --env-var 'url=${BASE_URL}' \
+                        --reporters cli,html \
+                        --reporter-html-export ${REPORTS_DIR}/welcome_test_report.html
+                """, shell: "/bin/sh")
             }
         }
 
         stage('Archive Reports') {
             steps {
-                archiveArtifacts artifacts: '*.html', fingerprint: true
+                archiveArtifacts artifacts: "${REPORTS_DIR}/*.html", fingerprint: true
             }
         }
     }
