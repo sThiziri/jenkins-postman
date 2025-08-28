@@ -1,22 +1,20 @@
 pipeline {
     agent {
         docker {
-            image 'postman/newman:latest'
+            image 'postman/newman:alpine'
+            args '--entrypoint=""' 
         }
     }
 
     environment {
-        BASE_URL = "http://192.168.1.95:8001" 
+        BASE_URL = "http://localhost:3000"
     }
 
     stages {
         stage('Run Postman Collection - home_test') {
             steps {
                 sh """
-                newman run home_test.json \\
-                    --env-var "url=${BASE_URL}" \\
-                    --reporters cli,html \\
-                    --reporter-html-export home_test_report.html
+                sh -c "newman run home_test.json --env-var 'url=${BASE_URL}' --reporters cli,html --reporter-html-export home_test_report.html"
                 """
             }
         }
@@ -24,10 +22,7 @@ pipeline {
         stage('Run Postman Collection - welcome_test') {
             steps {
                 sh """
-                newman run welcome_test.json \\
-                    --env-var "url=${BASE_URL}" \\
-                    --reporters cli,html \\
-                    --reporter-html-export welcome_test_report.html
+                sh -c "newman run welcome_test.json --env-var 'url=${BASE_URL}' --reporters cli,html --reporter-html-export welcome_test_report.html"
                 """
             }
         }
