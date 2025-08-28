@@ -1,0 +1,47 @@
+{
+	"info": {
+		"_postman_id": "8a3cd9c0-6887-4eb0-bb67-4248a03a72b2",
+		"name": "home_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20655533",
+		"_collection_link": "https://api-test-4495.postman.co/workspace/postman_to_k6~d8151c7e-a894-4a24-8857-1c580396448a/collection/20655533-8a3cd9c0-6887-4eb0-bb67-4248a03a72b2?action=share&source=collection_link&creator=20655533"
+	},
+	"item": [
+		{
+			"name": "home_test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 100ms\", function () {  \r",
+							"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains 'Hello World'\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Hello World\");\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
