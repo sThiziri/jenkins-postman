@@ -1,17 +1,15 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'postman/newman:alpine' // Image officielle Newman
+        }
+    }
 
     environment {
-        BASE_URL = "http://192.168.1.95:8001/"
+        BASE_URL = "http://192.168.1.95:8001" // Modifie selon ton API
     }
 
     stages {
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install -g newman newman-reporter-html'
-            }
-        }
-
         stage('Run Postman Collection - home_test') {
             steps {
                 sh """
@@ -42,14 +40,8 @@ pipeline {
     }
 
     post {
-        always {
-            echo "Tests finished !"
-        }
-        success {
-            echo "All tests passed !"
-        }
-        failure {
-            echo "Some tests failed !"
-        }
+        always { echo "Tests finished !" }
+        success { echo "All tests passed" }
+        failure { echo "Some tests failed" }
     }
 }
