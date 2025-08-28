@@ -1,13 +1,12 @@
 pipeline {
     agent {
         docker {
-            image 'postman/newman:alpine'
-            args '--entrypoint=""' 
+            image 'postman/newman:latest'
         }
     }
 
     environment {
-        BASE_URL = "http://192.168.1.95:8001/"
+        BASE_URL = "http://192.168.1.95:8001"
     }
 
     stages {
