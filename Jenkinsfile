@@ -13,17 +13,14 @@ pipeline {
     stages {
         stage('Run Postman Collection - home_test') {
             steps {
-                sh """
-                sh -c "newman run home_test.postman_collection.json --env-var 'url=${BASE_URL}' --reporters cli,html --reporter-html-export home_test_report.html"
-                """
+                sh "newman run home_test.postman_collection.json --env-var 'url=${BASE_URL}' --reporters cli,html --reporter-html-export home_test_report.html"
             }
         }
 
         stage('Run Postman Collection - welcome_test') {
             steps {
-                sh """
-                sh -c "newman run welcome_test.postman_collection.json --env-var 'url=${BASE_URL}' --reporters cli,html --reporter-html-export welcome_test_report.html"
-                """
+                sh "newman run welcome_test.postman_collection.json --env-var 'url=${BASE_URL}' --reporters cli,html --reporter-html-export welcome_test_report.html"
+                
             }
         }
 
